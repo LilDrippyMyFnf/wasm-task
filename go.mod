@@ -1,4 +1,4 @@
-module wasm-task
+module github.com/jgbz/wasm-task
 
 go 1.17
 
