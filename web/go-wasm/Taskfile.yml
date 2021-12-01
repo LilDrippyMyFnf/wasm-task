@@ -1,0 +1,7 @@
+version: "3"
+
+tasks:
+    default:
+        desc: Build the app
+        cmds:
+        - tinygo build -o ../html/wasm/main.wasm -target wasm -no-debug wmain.go

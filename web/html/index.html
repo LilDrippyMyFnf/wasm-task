@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="css/bulma.css">
+    <link rel="stylesheet" type="text/css" href="css/w3.css">
+    <script src="https://kit.fontawesome.com/53db65ac19.js" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+			const WASM_URL = 'wasm/main.wasm';
+			var wasmSupported = (typeof WebAssembly === "object");
+			if (wasmSupported == false) {
+				alert('This application requires WebAssembly support.  Please upgrade your browser.');
+			} 
+	</script>           	
+   <script type="text/javascript" src="js/wasm/wasm_exec.js"></script>
+   <script type="text/javascript" src="js/wasm/wasm_init.js" ></script>
+</head>
+
+<body>
+	<div id="main">
+	</div>
+</body>
+</html>
