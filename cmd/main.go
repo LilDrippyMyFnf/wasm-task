@@ -27,7 +27,7 @@ func runApplication() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
-	r.RegisterRoutesGet("src")
+	r.RegisterRoutesGet("v1")
 	port := os.Getenv("PORT")
 
 	r.App.Static("/", "../web/html")
