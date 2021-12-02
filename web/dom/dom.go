@@ -20,22 +20,22 @@ func Clear(element js.Value) {
 	}
 }
 
-type adomJs struct {
+type domJs struct {
 	JsValue js.Value
 }
 
-func NewEmptyAdomJs() *adomJs {
-	return &adomJs{}
+func NewEmptydomJs() *domJs {
+	return &domJs{}
 }
 
-type adomJsOption func(*adomJs)
+type domJsOption func(*domJs)
 
-func NewAdomJs(name string, opts ...adomJsOption) js.Value {
+func NewdomJs(name string, opts ...domJsOption) js.Value {
 
 	elementName := strings.ToLower(name)
 	j := js.Global().Get("document").Call("createElement", elementName)
 
-	ajs := &adomJs{
+	ajs := &domJs{
 		JsValue: j,
 	}
 
@@ -46,11 +46,11 @@ func NewAdomJs(name string, opts ...adomJsOption) js.Value {
 	return ajs.JsValue
 }
 
-func Child(name string, opts ...adomJsOption) adomJsOption {
-	return func(j *adomJs) {
+func Child(name string, opts ...domJsOption) domJsOption {
+	return func(j *domJs) {
 		elementName := strings.ToLower(name)
 		c := js.Global().Get("document").Call("createElement", elementName)
-		ajs := &adomJs{
+		ajs := &domJs{
 			JsValue: c,
 		}
 		for _, opt := range opts {
@@ -60,12 +60,12 @@ func Child(name string, opts ...adomJsOption) adomJsOption {
 	}
 }
 
-func Child2(name string, ajsR *adomJs, opts ...adomJsOption) adomJsOption {
-	return func(j *adomJs) {
+func ChildNamed(name string, ajsR *domJs, opts ...domJsOption) domJsOption {
+	return func(j *domJs) {
 		elementName := strings.ToLower(name)
 		c := js.Global().Get("document").Call("createElement", elementName)
 
-		ajs := &adomJs{
+		ajs := &domJs{
 			JsValue: c,
 		}
 
@@ -77,50 +77,50 @@ func Child2(name string, ajsR *adomJs, opts ...adomJsOption) adomJsOption {
 	}
 }
 
-func Class(class string) adomJsOption {
-	return func(j *adomJs) {
+func Class(class string) domJsOption {
+	return func(j *domJs) {
 		j.JsValue.Call("setAttribute", "class", class)
 	}
 }
 
-func Style(style string) adomJsOption {
-	return func(j *adomJs) {
+func Style(style string) domJsOption {
+	return func(j *domJs) {
 		j.JsValue.Call("setAttribute", "style", style)
 	}
 }
 
-func Id(id string) adomJsOption {
-	return func(j *adomJs) {
+func Id(id string) domJsOption {
+	return func(j *domJs) {
 		j.JsValue.Call("setAttribute", "id", id)
 	}
 }
 
-func Type(id string) adomJsOption {
-	return func(j *adomJs) {
+func Type(id string) domJsOption {
+	return func(j *domJs) {
 		j.JsValue.Call("setAttribute", "type", id)
 	}
 }
 
-func Placeholder(id string) adomJsOption {
-	return func(j *adomJs) {
+func Placeholder(id string) domJsOption {
+	return func(j *domJs) {
 		j.JsValue.Call("setAttribute", "placeholder", id)
 	}
 }
 
-func Parent(parent js.Value) adomJsOption {
-	return func(j *adomJs) {
+func Parent(parent js.Value) domJsOption {
+	return func(j *domJs) {
 		parent.Call("appendChild", j.JsValue)
 	}
 }
 
-func Onclick(funcJs js.Func) adomJsOption {
-	return func(j *adomJs) {
+func Onclick(funcJs js.Func) domJsOption {
+	return func(j *domJs) {
 		j.JsValue.Set("onclick", funcJs)
 	}
 }
 
-func Text(content string) adomJsOption {
-	return func(j *adomJs) {
+func Text(content string) domJsOption {
+	return func(j *domJs) {
 		elementType := j.JsValue.Get("nodeName").String()
 		switch elementType {
 		case "INPUT", "TEXTAREA":
@@ -129,5 +129,17 @@ func Text(content string) adomJsOption {
 			j.JsValue.Set("textContent", content)
 		}
 
+	}
+}
+
+func SetAttribute(attr, value string) domJsOption {
+	return func(j *domJs) {
+		j.JsValue.Call("setAttribute", attr, value)
+	}
+}
+
+func PrintTeste(param string) domJsOption {
+	return func(j *domJs) {
+		println(param)
 	}
 }
