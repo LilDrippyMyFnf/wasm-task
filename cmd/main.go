@@ -1,12 +1,10 @@
 package main
 
 import (
-	"os"
-
-	"github.com/jgbz/wasm-task/cmd/server/routes"
-
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/jgbz/wasm-task/cmd/server/routes"
 	"github.com/joho/godotenv"
+	"os"
 )
 
 func main() {
@@ -15,7 +13,7 @@ func main() {
 
 func runApplication() {
 
-	err := godotenv.Load("../.env")
+	err := godotenv.Load("/wasm-task/.env")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -30,6 +28,6 @@ func runApplication() {
 	r.RegisterRoutesGet("v1")
 	port := os.Getenv("PORT")
 
-	r.App.Static("/", "../web/html")
+	r.App.Static("/", "/wasm-task/web/html")
 	r.App.Listen(":" + port)
 }

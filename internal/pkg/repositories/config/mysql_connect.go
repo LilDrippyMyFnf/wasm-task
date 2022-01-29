@@ -16,7 +16,10 @@ type ConfigRepository struct {
 var instance *ConfigRepository
 
 func newConfigRepository() *ConfigRepository {
-	db, err := sql.Open("mysql", os.Getenv("DB_USER")+":"+os.Getenv("DB_PWD")+"@tcp("+os.Getenv("DB_ADDR")+":"+os.Getenv("DB_PORT")+")/"+os.Getenv("DB_NAME"))
+
+	conn := os.Getenv("DB_USER") + ":" + os.Getenv("DB_PWD") + "@tcp(" + os.Getenv("DB_ADDR") + ":" + os.Getenv("DB_PORT") + ")/" + os.Getenv("DB_NAME")
+	fmt.Println(conn)
+	db, err := sql.Open("mysql", conn)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,7 +39,5 @@ func GetConfigRepository() *ConfigRepository {
 		instance = newConfigRepository()
 		fmt.Println("New config")
 	}
-
-	fmt.Println("conected")
 	return instance
 }

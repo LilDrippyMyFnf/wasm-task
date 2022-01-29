@@ -1,0 +1,65 @@
+version: '3'
+services:
+    # proxy:
+    #     build:
+    #         context: ./wasm-task/proxy/
+    #         dockerfile: Dockerfile
+    #     image: jgbz/proxy
+    #     container_name: proxy
+    #     ports:
+    #         - "80:80"
+    #     networks: 
+    #         - production-network
+    #     depends_on: 
+    #         - "backend"
+
+    wask-task:
+        build:
+          context: .
+          dockerfile: Dockerfile
+        ports:
+        - "8000:8000"
+        image: jgbz/wasm
+        container_name: wasm-task
+        environment:
+          DB_ADDR: db
+        depends_on:
+          - db
+        networks: 
+          - production-network
+
+
+    db:
+        image: mariadb:10.6.4-focal
+        restart: always
+        container_name: wasm-task_db
+        ports:
+          - 3306:3306
+        volumes:
+          - db-data:/var/lib/mysql
+          - ./db/:/docker-entrypoint-initdb.d/
+        environment:
+          MARIADB_ROOT_PASSWORD: 123456
+          MARIADB_DATABASE: task
+          MARIADB_USER: jgbz
+          MARIADB_PASSWORD: 123456
+        expose:
+         - "3306"
+        networks: 
+         - production-network
+
+
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+        - 8080:8080
+      networks: 
+         - production-network
+
+volumes:
+  db-data:
+
+networks: 
+    production-network:
+        driver: bridge

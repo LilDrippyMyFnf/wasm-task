@@ -2,11 +2,10 @@ package services
 
 import (
 	"context"
-	"net/http"
-
 	"github.com/jgbz/wasm-task/internal/pkg/models/request"
 	"github.com/jgbz/wasm-task/internal/pkg/models/response"
 	"github.com/jgbz/wasm-task/internal/pkg/repositories/task"
+	"net/http"
 )
 
 type TasksService struct {
